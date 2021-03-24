@@ -7,20 +7,22 @@
     <p>{{ oneUser }}</p>
     <h3>BOUND user</h3>
     <p>{{ boundUser }}</p>
-    <h3>Firestore Wrapper</h3>
-    <p>{{ firestore.users }}</p>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-import firebase from 'firebase/app'
-import 'firebase/firestore'
+import firebase from "firebase/app";
+import "firebase/firestore";
 
-const db = firebase.initializeApp({ projectId: 'medicare-4ccfe' }).firestore();
+const db = firebase.initializeApp({ projectId: "medicare-4ccfe" }).firestore();
 
-@Component
+@Component({
+  firestore: {
+    users: db.collection("users"),
+  },
+})
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
 
@@ -29,18 +31,12 @@ export default class HelloWorld extends Vue {
   boundUser = null;
 
   created() {
-    this.$bind('boundUser', db.collection('users').doc('VGKJorZZH2uxEQSyo5gT'));
-    console.log('Created happened');
+    this.$bind("boundUser", db.collection("users").doc("VGKJorZZH2uxEQSyo5gT"));
+    console.log("Created happened");
   }
 
   get oneUser() {
-    return db.collection('users').doc('VGKJorZZH2uxEQSyo5gT');
-  }
-
-  firestore() {
-    return {
-      users: db.collection('users'),
-    };
+    return db.collection("users").doc("VGKJorZZH2uxEQSyo5gT");
   }
 }
 </script>
