@@ -1,12 +1,6 @@
 <template>
   <div>
-    <h1>Now I am your master</h1>
-    <h3>Users</h3>
-    <p>{{ users }}</p>
-    <h3>Single user</h3>
-    <p>{{ oneUser }}</p>
-    <h3>BOUND user</h3>
-    <p>{{ boundUser }}</p>
+    <patients-list :patients="users" />
   </div>
 </template>
 
@@ -15,12 +9,16 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 import firebase from "firebase/app";
 import "firebase/firestore";
+import PatientsList from "@/components/PatientsList.vue";
 
 const db = firebase.initializeApp({ projectId: "medicare-4ccfe" }).firestore();
 
 @Component({
   firestore: {
     users: db.collection("users"),
+  },
+  components: {
+    PatientsList,
   },
 })
 export default class HelloWorld extends Vue {
