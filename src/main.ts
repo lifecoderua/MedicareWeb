@@ -5,6 +5,7 @@ import router from "./router";
 import store from "./store";
 import firebase from "firebase";
 import { firestorePlugin } from 'vuefire'
+import {init} from "@/services/db";
 
 firebase.firestore().enablePersistence()
   .catch((err) => {
@@ -19,6 +20,7 @@ firebase.firestore().enablePersistence()
 Vue.config.productionTip = false;
 Vue.use(firestorePlugin);
 
+init();
 
 new Vue({
   router,
